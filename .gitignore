@@ -1,0 +1,15 @@
+# Ignorar dependencias
+node_modules/
+
+# Ignorar base de datos y archivos de sesión
+database/database.json
+Sessions/
+
+# Ignorar archivos temporales y carpetas de ejecución
+tmp/
+storage/
+
+# Otros archivos del sistema
+.env
+.DS_Store
+Thumbs.db
