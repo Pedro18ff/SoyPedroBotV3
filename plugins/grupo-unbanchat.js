@@ -3,7 +3,7 @@ import path from 'path'
 
 let handler = async (m, { conn, isAdmin, isROwner }) => {
   const senderNumber = m.sender.replace(/[^0-9]/g, '')
-  const botPath = path.join('./JadiBots', senderNumber)
+  const botPath = path.join('./Pedro17ff', senderNumber)
 
   
   if (!(isAdmin || isROwner || fs.existsSync(botPath))) {

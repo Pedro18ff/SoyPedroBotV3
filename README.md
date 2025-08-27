@@ -1,4 +1,4 @@
-# ⭐ Michi-WaBot
+# ⭐ SoyPedro17ff
 
 <div align="center">
   <img src="https://iili.io/FZQTsXR.jpg" alt="Michi-WaBot Logo" width="150"/>

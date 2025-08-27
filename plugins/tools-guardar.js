@@ -1,5 +1,5 @@
 // codigo creado por 
-// github.com/Ado-rgb
+// github.com/Pedro18ff
 import fs from 'fs'
 import { downloadContentFromMessage } from '@whiskeysockets/baileys'
 

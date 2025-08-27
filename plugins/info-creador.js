@@ -15,22 +15,22 @@ let handler = async (m, { conn }) => {
   const owners = [
     {
       name: 'Ado',
-      desc: 'Creador Principal de 𝖠𝖨 | 𝖬𝗂𝖼𝗁𝗂 🧃',
+      desc: 'Creador Principal de 𝖠𝖨 | Pedro 🧃',
       image: 'https://iili.io/KJXfhmJ.jpg',
       buttons: [
-        { name: '🌴 WhatsApp', url: 'https://wa.me/50493732693' },
-        { name: '🥞 Canal OFC', url: 'https://whatsapp.com/channel/0029VbArz9fAO7RGy2915k3O' },
-        { name: '🧃 Grupo', url: 'https://chat.whatsapp.com/HztBH5HP4kpBE86Nbuax4i?mode=ems_copy_c' },
+        { name: '🌴 WhatsApp', url: 'https://wa.me/51994884471' },
+        { name: '🥞 Canal OFC', url: 'https://whatsapp.com/channel/0029Vb6pxnHJf05UZAFuVX2P' },
+        { name: '🧃 Grupo', url: 'https://chat.whatsapp.com/Jbi0UN57afA7rN8RyvqwDX' },
         { name: '🍂 API', url: 'https://myapiadonix.vercel.app' }
       ]
     },
     {
-      name: 'GianPoolS',
-      desc: 'Colaborador de 𝖠𝖨 | 𝖬𝗂𝖼𝗁𝗂 🧃',
+      name: 'Pedro S Torres',
+      desc: 'Colaborador de 𝖠𝖨 | Pedro1M 🧃',
       image: 'https://iili.io/KJXfymb.jpg',
       buttons: [
-        { name: '🦖 WhatsApp', url: 'https://wa.me/51956931649' },
-        { name: '💎 Github', url: 'https://github.com/GianPoolS' }
+        { name: '🦖 WhatsApp', url: 'https://wa.me/51994884471' },
+        { name: '💎 Github', url: 'https://github.com/Pedro18ff' }
       ]
     }
   ]
@@ -53,7 +53,7 @@ let handler = async (m, { conn }) => {
         text: `🦞 *${owner.name}*\n${owner.desc}`
       }),
       footer: proto.Message.InteractiveMessage.Footer.fromObject({
-        text: '> 🍿 Conoce más sobre nuestros creadores siguiendo sus redes sociales. Haz clic en cualquier botón para acceder a sus perfiles.\nSi te gustaría apoyarlos, puedes dejar tu estrellita en el repo: github.com/Ado-rgb/Michi-WaBot'
+        text: '> 🍿 Conoce más sobre nuestros creadores siguiendo sus redes sociales. Haz clic en cualquier botón para acceder a sus perfiles.\nSi te gustaría apoyarlos, puedes dejar tu estrellita en el repo: github.com/Pedro18ff/SoyPedroBotV3'
       }),
       header: proto.Message.InteractiveMessage.Header.fromObject({
         hasMediaAttachment: true,
@@ -74,10 +74,10 @@ let handler = async (m, { conn }) => {
         },
         interactiveMessage: proto.Message.InteractiveMessage.fromObject({
           body: proto.Message.InteractiveMessage.Body.create({
-            text: '🙀 Creadores de 𝖠𝖨 | 𝖬𝗂𝖼𝗁𝗂 🧃 ⚘️'
+            text: '🙀 Creadores de 𝖠𝖨 | Pedro 🧃 ⚘️'
           }),
           footer: proto.Message.InteractiveMessage.Footer.create({
-            text: '🎋 Conoce a los desarrolladores de Michi'
+            text: '🎋 Conoce a los desarrolladores de PedroBot'
           }),
           carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
             cards

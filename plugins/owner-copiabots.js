@@ -1,11 +1,11 @@
 /**
  * Comando: .copiabots
  * Autor: Ado-rgb
- * Repositorio: github.com/Ado-rgb
+ * Repositorio: github.com/Pedro18ff
  * 🚫 No quitar créditos
  * 
  * Funcionalidad:
- * 📦 Crea un ZIP de ./JadiBots usando solo Node.js nativo y lo envía
+ * 📦 Crea un ZIP de ./SoyPedro usando solo Node.js nativo y lo envía
  */
 
 import fs from 'fs'

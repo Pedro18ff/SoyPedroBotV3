@@ -1,7 +1,7 @@
 {
-  "name": "Michi-WaBot-MD",
+  "name": "SoyPedroBot",
   "version": "1.0.0",
-  "description": "Michi Multi Device",
+  "description": "Pedro Multi Device",
   "main": "index.js",
   "type": "module",
   "directories": {

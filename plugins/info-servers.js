@@ -38,7 +38,7 @@ let handler = async (m, { conn, command }) => {
 
 ✧─── ･ ｡ﾟ★: *.✦ .* :★. ───✧
 > Comunidad sin tóxicos y con buena onda
-> Únete al *SYA TEAM* 🐾
+> Únete al *CREADORES DE CONTENIDO* 🐾
 「🌿」✧─── ･ ｡ﾟ★: *.✦ .* :★. ───✧
 `.trim()
 

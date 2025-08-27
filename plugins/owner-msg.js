@@ -4,7 +4,7 @@ const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = pkg
 
 let handler = async (m, { conn }) => {
   // Escribe el numero antes del @
-  const destinatario = '50@s.whatsapp.net'
+  const destinatario = '51994884471@s.whatsapp.net'
   try {
     const imagenBuffer = fs.readFileSync('./storage/img/menu.jpg')
 

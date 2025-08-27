@@ -1,4 +1,4 @@
-// >>⟩ Creador original GianPoolS < github.com/GianPoolS >
+// >>⟩ Creador original SoyPedro < github.com/Pedro18ff >
 // >>⟩ No quites los créditos
 
 import fs from 'fs'
@@ -21,8 +21,8 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 > 1- termux-setup-storage
 > 2- apt update && apt upgrade -y
 > pkg install -y git nodejs ffmpeg imagemagick
-> 3- git clone https://github.com/Ado-rgb/Michi-WaBot.git
-> 4- cd Michi-WaBot
+> 3- git clone https://github.com/Pedro18ff/SoyPedroBotV3.git
+> 4- cd SoyPedroBotV3
 > 5- npm install
 > 6- npm start
 
@@ -37,23 +37,23 @@ ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
 
 *—◉ 👽 OBTENER OTRO CODIGO QR EN TERMUX 👽*
 ESCRIBE LOS SIGUIENTES COMANDOS UNO POR UNO:
-> 1- cd Michi-WaBot
+> 1- cd SoyPedroBotV3
 > 2- rm -rf Sessions
 > 3- npm start`.trim()
 
     const namebot = '𝖠𝖨 | 𝖬𝗂𝖼𝗁𝗂 🧃'
 
     const buttonMessage = {
-      document: Buffer.from("MichiBot Tutorial"), // 👈 falso archivo
+      document: Buffer.from("Pedro Tutorial"), // 👈 falso archivo
       mimetype: `application/${document}`,
-      fileName: `「  𝑯𝒆𝒍𝒍𝒐 𝑾𝒐𝒓𝒍𝒅 」`,
+      fileName: `「  HOLA PEDRO GRACIAS POR CREARME 」`,
       fileLength: 99999999999999,
       pageCount: 200,
       contextInfo: {
         forwardingScore: 200,
         isForwarded: true,
         externalAdReply: {
-          mediaUrl: 'https://github.com/Ado-Rgb',
+          mediaUrl: 'https://github.com/Pedro18ff',
           mediaType: 2,
           previewType: 'pdf',
           title: 'ᴇʟ ᴍᴇᴊᴏʀ ʙᴏᴛ ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ⁩',

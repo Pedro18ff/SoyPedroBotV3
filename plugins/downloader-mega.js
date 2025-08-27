@@ -1,4 +1,4 @@
-// >>⟩ Creador original GianPoolS < github.com/GianPoolS >
+// >>⟩ Creador original SoyPedro < github.com/Pedro18ff >
 // >>⟩ No quites los creditos
 
 import { File } from "megajs";
@@ -25,7 +25,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     // Mostrar info del archivo al usuario
     let caption = `
-🌦 MichiBot-MD 🍁
+🌦 PedroBot 🍁
 📄 Nombre: ${file.name}
 💪 Tamaño: ${fileSize}
 🚀 Tipo: ${mimeType}

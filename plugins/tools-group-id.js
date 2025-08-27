@@ -1,6 +1,6 @@
 /* Plugin
 Toplayroblox
-Autor: Ado 🦖
+Autor: Pedro 🦖
 */
 import axios from 'axios';
 

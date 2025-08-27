@@ -26,17 +26,17 @@ const defaultMenu = {
 🍂 Hola, Soy *%botname* (%tipo)
 *%name*, %greeting
 
-> 🪴 Canal: https://whatsapp.com/channel/0029VbArz9fAO7RGy2915k3O
+> 🪴 Canal: https://chat.whatsapp.com/Jbi0UN57afA7rN8RyvqwDX
 
-🥞 DATE = *%date*
-🍿 ACTIVITY = *%uptime*
+🥞 FECHA = *%date*
+🍿 ACTIVIDAD = *%uptime*
 %readmore
 `.trimStart(),
 
   header: '\n`> %category`',
   body: '🌴 *%cmd* %islimit %isPremium',
   footer: '',
-  after: '\n🌤 Creador Ado\n🌿 Colaborador GianPoolS',
+  after: '\n🌤 Creador Pedro17_ff\n🌿 Colaborador SoyPedro',
 }
 
 const handler = async (m, { conn, usedPrefix: _p }) => {
@@ -135,7 +135,7 @@ const handler = async (m, { conn, usedPrefix: _p }) => {
         title: nombreBot,
         body: "🌿 Menú Oficial",
         thumbnailUrl: bannerFinal,
-        sourceUrl: "https://whatsapp.com/channel/0029VbArz9fAO7RGy2915k3O",
+        sourceUrl: "https://chat.whatsapp.com/Jbi0UN57afA7rN8RyvqwDX",
         mediaType: 1,
         renderLargerThumbnail: true
       },
