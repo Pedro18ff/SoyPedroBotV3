@@ -9,7 +9,7 @@ export async function before(m, { conn }) {
 
 
     const botActual = conn.user?.jid?.split('@')[0].replace(/\D/g, '')
-    const configPath = path.join('./JadiBots', botActual, 'config.json')
+    const configPath = path.join('./Pedro17ff', botActual, 'config.json')
 
     if (fs.existsSync(configPath)) {
       try {

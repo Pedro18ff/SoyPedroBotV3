@@ -1,6 +1,6 @@
 /**
- * Creado por Ado-rgb
- * Repo: github.com/Ado-rgb
+ * Creado por Pedro17ff
+ * Repo: github.com/Pedro18ff
  * No quitar créditos
  */
 

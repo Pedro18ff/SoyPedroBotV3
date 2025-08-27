@@ -1,4 +1,4 @@
-//Creado por > @xrljose <
+//Creado por > @SoyPedro  <
 //No quites los créditos
 
 import fetch from 'node-fetch';
