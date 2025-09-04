@@ -1,14 +1,14 @@
 import { promises as fs } from 'fs';
 
-const charactersFilePath = './database/characters.json';
-const haremFilePath = './database/harem.json';
+const charactersFilePath = './src/database/characters.json';
+const haremFilePath = './src/database/harem.json';
 
 async function loadCharacters() {
     try {
         const data = await fs.readFile(charactersFilePath, 'utf-8');
         return JSON.parse(data);
     } catch (error) {
-        throw new Error('✎ No pudimos atrapar la información esta vez.\n> *Si crees que es un fallo, reportalo con los moderadores utilizando /report.*');
+        throw new Error('No se pudo cargar el archivo characters.json.');
     }
 }
 
@@ -16,17 +16,14 @@ async function loadHarem() {
     try {
         const data = await fs.readFile(haremFilePath, 'utf-8');
         return JSON.parse(data);
-    } catch {
+    } catch (error) {
         return [];
     }
 }
 
 let handler = async (m, { conn, args }) => {
     if (args.length === 0) {
-        await conn.sendMessage(m.chat, { 
-            text: '✎ Necesitamos un nombre para buscar la información.\n> *Ejemplo:* `#winfo Aika Sano`', 
-            ...global.rcanal 
-        }, { quoted: m });
+        await conn.reply(m.chat, '《✧》Debes especificar un personaje para ver su información.\n> Ejemplo » *#winfo Aika Sano*', m);
         return;
     }
 
@@ -37,46 +34,28 @@ let handler = async (m, { conn, args }) => {
         const character = characters.find(c => c.name.toLowerCase() === characterName);
 
         if (!character) {
-            await conn.sendMessage(m.chat, { 
-                text: `✎ No pudimos atrapar la información esta vez.\n> *¿Seguro que existe "${characterName}"?*`, 
-                ...global.rcanal 
-            }, { quoted: m });
+            await conn.reply(m.chat, `《✧》No se encontró el personaje *${characterName}*.`, m);
             return;
         }
 
         const harem = await loadHarem();
         const userEntry = harem.find(entry => entry.characterId === character.id);
-        const statusMessage = userEntry
-            ? `Reclamado por @${userEntry.userId.split('@')[0]}`
+        const statusMessage = userEntry 
+            ? `Reclamado por @${userEntry.userId.split('@')[0]}` 
             : 'Libre';
+        
+        const message = `❀ Nombre » *${character.name}*\n⚥ Género » *${character.gender}*\n✰ Valor » *${character.value}*\n♡ Estado » ${statusMessage}\n❖ Fuente » *${character.source}*`;
 
-        const message = `╭─────────────────
-│ *❀ INFO WAIFU (❛◡❛)*
-├─────────────────
-┃✎ *Nombre:* » *${character.name}*
-┃✎ *Género:* » *${character.gender}*
-┃✎ *Valor:* » *${character.value}*
-┃✎ *Estado:* » ${statusMessage}
-┃✎ *Fuente:* » *${character.source}*
-╰─────────────────`;
-
-        await conn.sendMessage(m.chat, { 
-            text: message, 
-            mentions: userEntry ? [userEntry.userId] : [], 
-            ...global.rcanal 
-        }, { quoted: m });
+        await conn.reply(m.chat, message, m, { mentions: [userEntry ? userEntry.userId : null] });
     } catch (error) {
-        await conn.sendMessage(m.chat, { 
-            text: `✎ No pudimos atrapar la información esta vez.`, 
-            ...global.rcanal 
-        }, { quoted: m });
+        await conn.reply(m.chat, `✘ Error al cargar la información del personaje: ${error.message}`, m);
     }
 };
 
-handler.help = ['winfo'];
-handler.tags = ['gacha'];
+handler.help = ['charinfo <nombre del personaje>', 'winfo <nombre del personaje>', 'waifuinfo <nombre del personaje>'];
+handler.tags = ['anime'];
 handler.command = ['charinfo', 'winfo', 'waifuinfo'];
-handler.group = false;
-handler.register = false;
+handler.group = true;
+handler.register = true;
 
 export default handler;

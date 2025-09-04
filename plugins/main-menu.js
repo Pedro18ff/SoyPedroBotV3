@@ -1,162 +1,133 @@
-import fs from 'fs'
-import { join } from 'path'
 import { xpRange } from '../lib/levelling.js'
 
-const tags = {
-  owner: '👑 PROPIETARIO',
-  serbot: '🫟 SUBBOTS',
-  eco: '💸 ECONOMÍA',
-  downloader: '⬇️ DESCARGAS',
-  tools: '🛠️ HERRAMIENTAS',
-  efectos: '🍿 EFECTOS',
-  info: 'ℹ️ INFORMACIÓN',
-  game: '🎮 JUEGOS',
-  gacha: '🎲 GACHA ANIME',
-  reacciones: '💕 ANIME REACCIONES',
-  group: '👥 GRUPOS',
-  search: '🔎 BUSCADORES',
-  sticker: '📌 STICKERS',
-  ia: '🤖 IA',
-  channel: '📺 CANALES',
-  fun: '😂 DIVERSIÓN',
+const textCyberpunk = (text) => {
+  const charset = {
+    a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ',
+    h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ', n: 'ɴ',
+    o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ',
+    v: 'ᴠ', w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ'
+  }
+  return text.toLowerCase().split('').map(c => charset[c] || c).join('')
+}
+
+let tags = {
+  'main': textCyberpunk('sistema'),
+  'group': textCyberpunk('grupos'),
+  'serbot': textCyberpunk('sub bots'),
 }
 
 const defaultMenu = {
   before: `
-🍂 Hola, Soy *%botname* (%tipo)
-*%name*, %greeting
+⎯͟͞͞★ ✦ 𝙐𝙎𝙀𝙍 𝙎𝙏𝘼𝙏𝙐𝙎 ✦ ★͟͞͞⎯
+│ 🪐 𝙉𝙤𝙢𝙗𝙧𝙚   » %name  
+│ ⚙️ 𝙇𝙫𝙡       » %level  
+│ ⚡ 𝙀𝙭𝙥       » %exp / %maxexp  
+│ 🌐 𝙈𝙤𝙙𝙚      » %mode  
+│ ⏳ 𝘼𝙘𝙩𝙞𝙫𝙤   » %muptime  
+│ 👥 𝙐𝙨𝙪𝙖𝙧𝙞𝙤𝙨 » %totalreg  
+★━━━━━━━━━━━━━━━━━★
 
-> 🪴 Canal: https://chat.whatsapp.com/Jbi0UN57afA7rN8RyvqwDX
-
-🥞 FECHA = *%date*
-🍿 ACTIVIDAD = *%uptime*
+🧬 » 𝗛𝗔𝗖𝗞 𝗡𝗢𝗗𝗘 𝗔𝗖𝗧𝗜𝗩𝗢 «  
+👑 » 𝗢𝗽𝗲𝗿𝗮𝗱𝗼𝗿:—͟͟͞͞𝐓𝐡𝐞 𝐂𝐚𝐫𝐥𝐨𝐬 𖣘 «
 %readmore
 `.trimStart(),
 
-  header: '\n`> %category`',
-  body: '🌴 *%cmd* %islimit %isPremium',
-  footer: '',
-  after: '\n🌤 Creador Pedro17_ff\n🌿 Colaborador SoyPedro',
+header: '\n╭─〔 🦠 %category 〕─╮',
+  body: '│ ⚙️ %cmd\n',
+  footer: '╰────────────────╯',
+  after: '\n⌬ 𝗖𝗬𝗕𝗘𝗥 𝗠𝗘𝗡𝗨 ☠️ - Sistema ejecutado con éxito.'
 }
 
-const handler = async (m, { conn, usedPrefix: _p }) => {
+let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
-    const { exp, limit, level } = global.db.data.users[m.sender]
-    const { min, xp, max } = xpRange(level, global.multiplier)
-    const name = await conn.getName(m.sender)
+    let { exp, level } = global.db.data.users[m.sender]
+    let { min, xp, max } = xpRange(level, global.multiplier)
+    let name = await conn.getName(m.sender)
+    let _uptime = process.uptime() * 1000
+    let muptime = clockString(_uptime)
+    let ramUsage = (process.memoryUsage().rss / 1024 / 1024).toFixed(2)
+    let totalreg = Object.keys(global.db.data.users).length
+    let mode = global.opts["self"] ? "Privado" : "Público"
 
-    const d = new Date(Date.now() + 3600000)
-    const date = d.toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })
+    let help = Object.values(global.plugins).filter(p => !p.disabled).map(p => ({
+      help: Array.isArray(p.help) ? p.help : [p.help],
+      tags: Array.isArray(p.tags) ? p.tags : [p.tags],
+      prefix: 'customPrefix' in p,
+      limit: p.limit,
+      premium: p.premium,
+      enabled: !p.disabled,
+    }))
 
-    const help = Object.values(global.plugins)
-      .filter(p => !p.disabled)
-      .map(p => ({
-        help: Array.isArray(p.help) ? p.help : [p.help],
-        tags: Array.isArray(p.tags) ? p.tags : [p.tags],
-        prefix: 'customPrefix' in p,
-        limit: p.limit,
-        premium: p.premium,
-      }))
-
-    let fkontak = { 
-      key: { remoteJid: "status@broadcast", participant: "0@s.whatsapp.net" },
-      message: { imageMessage: { caption: "Menu De Comandos 🥦", jpegThumbnail: Buffer.alloc(0) }}
-    }
-    let nombreBot = global.namebot || 'Bot'
-    let bannerFinal = 'https://iili.io/KJXN7yB.jpg'
-
-    const botActual = conn.user?.jid?.split('@')[0]?.replace(/\D/g, '')
-    const configPath = join('./JadiBots', botActual || '', 'config.json')
-    if (botActual && fs.existsSync(configPath)) {
-      try {
-        const config = JSON.parse(fs.readFileSync(configPath))
-        if (config.name) nombreBot = config.name
-        if (config.banner) bannerFinal = config.banner
-      } catch {}
+    for (let plugin of help) {
+      if (plugin.tags) {
+        for (let t of plugin.tags) {
+          if (!(t in tags) && t) tags[t] = textCyberpunk(t)
+        }
+      }
     }
 
-    const tipo = conn.user?.jid === global.conn?.user?.jid ? '𝖯𝗋𝗂𝗇𝖼𝗂𝗉𝖺𝗅' : '𝖲𝗈𝖼𝗄𝖾𝗍'
-    const menuConfig = conn.menu || defaultMenu
+    const { before, header, body, footer, after } = defaultMenu
 
-    const _text = [
-      menuConfig.before,
-      ...Object.keys(tags).sort().map(tag => {
+    let _text = [
+      before,
+      ...Object.keys(tags).map(tag => {
         const cmds = help
-          .filter(menu => menu.tags?.includes(tag))
-          .map(menu => menu.help.map(h => 
-            menuConfig.body
-              .replace(/%cmd/g, menu.prefix ? h : `${_p}${h}`)
-              .replace(/%islimit/g, menu.limit ? '⭐' : '')
-              .replace(/%isPremium/g, menu.premium ? '🪪' : '')
-          ).join('\n')).join('\n')
-        return [menuConfig.header.replace(/%category/g, tags[tag]), cmds, menuConfig.footer].join('\n')
+          .filter(menu => menu.tags.includes(tag))
+          .map(menu => menu.help.map(cmd => body.replace(/%cmd/g, menu.prefix ? cmd : _p + cmd)).join('\n'))
+          .join('\n')
+        return `${header.replace(/%category/g, tags[tag])}\n${cmds}\n${footer}`
       }),
-      menuConfig.after
+      after
     ].join('\n')
 
-    const replace = {
+    let replace = {
       '%': '%',
-      p: _p,
-      botname: nombreBot,
-      taguser: '@' + m.sender.split('@')[0],
+      name,
+      level,
       exp: exp - min,
       maxexp: xp,
-      totalexp: exp,
-      xp4levelup: max - exp,
-      level,
-      limit,
-      name,
-      date,
-      uptime: clockString(process.uptime() * 1000),
-      tipo,
-      readmore: readMore,
-      greeting,
+      totalreg,
+      mode,
+      muptime,
+      ram: ramUsage,
+      readmore: String.fromCharCode(8206).repeat(4001)
     }
 
-    const text = _text.replace(
-      new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join('|')})`, 'g'),
-      (_, name) => String(replace[name])
-    )
+    let text = _text.replace(/%(\w+)/g, (_, key) => replace[key] || '')
 
-    const isURL = /^https?:\/\//i.test(bannerFinal)
-    const imageContent = isURL 
-      ? { image: { url: bannerFinal } } 
-      : { image: fs.readFileSync(bannerFinal) }
+    // el mejor bot 
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://qu.ax/vazFJ.mp4' },
+      caption: text,
+      gifPlayback: true,
+      footer: '🧠 BLACK CLOVER SYSTEM ☘️',
+      buttons: [
+        { buttonId: `${_p}menurpg`, buttonText: { displayText: '🏛️ M E N U R P G' }, type: 1 },
+        { buttonId: `${_p}code`, buttonText: { displayText: '🕹 ＳＥＲＢＯＴ' }, type: 1 }
+      ],
+      contextInfo: {
+        externalAdReply: {
+          title: '𝕭𝖑𝖆𝖈𝖐 𝕮𝖑𝖔𝖛𝖊𝖗  | 𝕳𝖆𝖐 v777 🥷🏻',
+          body: ' —͟͟͞͞𖣘𝐓𝐡𝐞 𝐂𝐚𝐫𝐥𝐨𝐬 ㊗  ',
+          thumbnailUrl: 'https://qu.ax/HVBuQ.jpg', 
+          sourceUrl: 'https://github.com/thecarlos19/black-clover-MD', 
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    }, { quoted: m })
 
-    await conn.sendMessage(m.chat, { react: { text: '😺', key: m.key } })
-    await conn.sendMessage(
-  m.chat,
-  { 
-    text: text.trim(),
-    footer: 'Menu de comandos',
-    headerType: 4,
-    contextInfo: {
-      externalAdReply: {
-        title: nombreBot,
-        body: "🌿 Menú Oficial",
-        thumbnailUrl: bannerFinal,
-        sourceUrl: "https://chat.whatsapp.com/Jbi0UN57afA7rN8RyvqwDX",
-        mediaType: 1,
-        renderLargerThumbnail: true
-      },
-      mentionedJid: conn.parseMention(text)
-    }
-  },
-  { quoted: fkontak }
-)
   } catch (e) {
-    console.error('❌ Error en el menú:', e)
-    conn.reply(m.chat, '❎ Lo sentimos, el menú tiene un error.', m)
+    console.error(e)
+    conn.reply(m.chat, '❎ Error al generar el menú del sistema.', m)
   }
 }
 
-handler.command = ['m', 'menu', 'help', 'hélp', 'menú', 'ayuda']
-handler.register = false
+handler.help = ['menu', 'menú']
+handler.tags = ['main']
+handler.command = ['menu', 'menú', 'help', 'ayuda']
+handler.register = true
 export default handler
-
-// Utilidades
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(4001)
 
 function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
@@ -164,16 +135,3 @@ function clockString(ms) {
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':')
 }
-
-const hour = new Date().getHours()
-const greetingMap = {
-  0: 'una noche tranquila 🌙', 1: 'una noche tranquila 🌙', 2: 'una noche tranquila 🌙',
-  3: 'una mañana tranquila ☀️', 4: 'una mañana tranquila ☀️', 5: 'una mañana tranquila ☀️',
-  6: 'una mañana tranquila ☀️', 7: 'una mañana tranquila ☀️', 8: 'una mañana tranquila ☀️',
-  9: 'un buen día ☀️', 10: 'un buen día ☀️', 11: 'un buen día ☀️',
-  12: 'un buen día ☀️', 13: 'un buen día ☀️', 14: 'una tarde tranquila 🌇',
-  15: 'una tarde tranquila 🌇', 16: 'una tarde tranquila 🌇', 17: 'una tarde tranquila 🌇',
-  18: 'una noche tranquila 🌙', 19: 'una noche tranquila 🌙', 20: 'una noche tranquila 🌙',
-  21: 'una noche tranquila 🌙', 22: 'una noche tranquila 🌙', 23: 'una noche tranquila 🌙',
-}
-const greeting = 'Espero que tengas ' + (greetingMap[hour] || 'un buen día')
